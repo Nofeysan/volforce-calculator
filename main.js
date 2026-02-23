@@ -108,8 +108,8 @@ client.on('interactionCreate', async interaction => {
             .addFields(
                 { name: '譜面レベル', value: `Lv ${lv}`, inline: true },
                 { name: 'スコア', value: sc.toLocaleString(), inline: true },
-                { name: 'ゲージ', value: gauge.toUpperCase(), inline: true },
-                { name: '単曲VF', value: `### ${vf}**` }
+                { name: 'ゲージ', value: gaugeName, inline: true },
+                { name: '単曲VF', value: `## ${vf}` }
             );
 
         await interaction.reply({ embeds: [embed] });
