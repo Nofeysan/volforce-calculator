@@ -122,9 +122,9 @@ client.on('interactionCreate', async interaction => {
             // .setTitle('SDVX 単曲VOLFORCE')
             .setColor(embedColor)
             .addFields(
-                { name: '譜面定数', value: `${lv.toFixed(1)}`},
-                { name: 'スコア', value: sc.toLocaleString()},
-                { name: 'ゲージ', value: gaugeName},
+                { name: '譜面定数', value: `${lv.toFixed(1)}` + "　"},
+                { name: 'スコア', value: sc.toLocaleString() + "　"},
+                { name: 'ゲージ', value: gaugeName + "　"},
                 { name: '≪ 単曲VF ≫', value: `**${vf.toFixed(0)}**` }
             );
 
