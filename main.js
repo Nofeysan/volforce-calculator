@@ -36,6 +36,7 @@ const commands = [
 ];
 
 // 3. 起動時処理（コマンド登録）
+/*/
 client.once('clientReady', async () => {
     console.log(`Logged in as ${client.user.tag}`);
     
@@ -46,6 +47,21 @@ client.once('clientReady', async () => {
         console.log('Slash Commands registered successfully.');
     } catch (error) {
         console.error('Error registering commands:', error);
+    }
+});
+/*/
+
+client.once('clientReady', async (c) => {
+    console.log(`> ログイン成功: ${c.user.tag}`);
+    
+    const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
+    try {
+        console.log('> コマンド登録を開始します...');
+        // client.user.id が不安定な場合があるため、c.user.id を使用
+        await rest.put(Routes.applicationCommands(c.user.id), { body: commands });
+        console.log('> コマンド登録が完了しました');
+    } catch (error) {
+        console.error('[!] コマンド登録エラー: ', error);
     }
 });
 
