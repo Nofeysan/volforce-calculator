@@ -125,7 +125,7 @@ client.on('interactionCreate', async interaction => {
                 { name: '譜面定数', value: `Lv ${lv.toFixed(1)}`},
                 { name: 'スコア', value: sc.toLocaleString()},
                 { name: 'ゲージ', value: gaugeName},
-                { name: '', value: ''},
+                { name: '\u200b', value: '\u200b'},
                 { name: '= 単曲VF =', value: `**${vf.toFixed(0)}**` }
             );
 
