@@ -51,7 +51,7 @@ client.once('clientReady', async () => {
 });
 /*/
 
-client.once('clientReady', async (c) => {
+client.once('ready', async (c) => {
     console.log(`> ログイン成功: ${c.user.tag}`);
     
     const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
@@ -109,7 +109,7 @@ client.on('interactionCreate', async interaction => {
                 { name: '譜面レベル', value: `Lv ${lv.toFixed(1)}`, inline: true },
                 { name: 'スコア', value: sc.toLocaleString(), inline: true },
                 { name: 'ゲージ', value: gaugeName, inline: true },
-                { name: '単曲VF', value: `### **${vf.toFixed(0)}**` }
+                { name: '単曲VF', value: `## ${vf.toFixed(0)}` }
             );
 
         await interaction.reply({ embeds: [embed] });
