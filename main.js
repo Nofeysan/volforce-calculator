@@ -119,12 +119,13 @@ client.on('interactionCreate', async interaction => {
 
         // 結果の返信
         const embed = new EmbedBuilder()
-            .setTitle('SDVX VOLFORCE Calculator')
+            // .setTitle('SDVX 単曲VOLFORCE')
             .setColor(embedColor)
             .addFields(
-                { name: '譜面定数', value: `Lv ${lv.toFixed(1)}`, inline: true },
-                { name: 'スコア', value: sc.toLocaleString(), inline: true },
-                { name: 'ゲージ', value: gaugeName, inline: true },
+                { name: '譜面定数', value: `Lv ${lv.toFixed(1)}`},
+                { name: 'スコア', value: sc.toLocaleString()},
+                { name: 'ゲージ', value: gaugeName},
+                { name: '', value: ''},
                 { name: '= 単曲VF =', value: `**${vf.toFixed(0)}**` }
             );
 
