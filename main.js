@@ -138,7 +138,7 @@ client.on('interactionCreate', async interaction => {
 
         // ログを流す
         const logTime = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
-        console.log(`[${logTime}] input: ${lv} / ${sc.toLocaleString()} / ${gaugeName} => VF ${vf}`);
+        console.log(`[${logTime}] input: ${lv.toFixed(1)} / ${sc.toLocaleString()} / ${gaugeName} => VF ${vf}`);
 
                 await interaction.reply({ embeds: [embed] });
     }
