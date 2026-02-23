@@ -21,7 +21,15 @@ const commands = [
         .addNumberOption(opt => 
             opt.setName('level').setDescription('譜面定数を入力').setRequired(true).setMinValue(1.0).setMaxValue(20.9))
         .addIntegerOption(opt => 
-            opt.setName('score').setDescription('スコアを入力（0 ~ 10,000,000）').setRequired(true).setMinValue(0).setMaxValue(10000000).setAutocomplete(true))
+            opt.setName('score').setDescription('スコアを入力（0 ~ 10,000,000）').setRequired(false).setMinValue(0).setMaxValue(10000000))
+        .addIntegerOption(opt => 
+            opt.setName('rank').setDescription('もしくはランクを入力（どちらか一方のみ必須）').setRequired(false)
+        .addChoices(
+            { name: 'PUC (10,000,000)', value: 10000000 },
+            { name: 'S (9,900,000)',    value:  9900000 },
+            { name: 'AAA+ (9,800,000)', value:  9800000 },
+            { name: 'AAA (9,700,000)',  value:  9700000 }
+        ))
         .addStringOption(opt => 
             opt.setName('gauge').setDescription('ゲージや、UC/PUCのランプを選択')
             .setRequired(true)
@@ -69,25 +77,21 @@ client.once('ready', async (c) => {
 client.on('interactionCreate', async interaction => {
     if (!interaction.isChatInputCommand()) return;
 
-    if (interaction.isAutocomplete()) {
-        const focusedValue = interaction.getFocused();
-
-        const choices = [
-            { name: "PUC (10,000,000)",  value: 10000000},
-            { name: "S (9,900,000)",    value:  9900000},
-            { name: "AAA+ (9,800,000)", value:  9800000},
-            { name: "AAA (9,700,000)",  value:  9700000},
-        ]
-
-        const filtered = choices.filter(choice => choice.name.includes(focusedValue))
-        await interaction.respond(filtered)
-        return;
-    }
-
     if (interaction.commandName === 'sdvx') {
         const lv = interaction.options.getNumber('level');
-        const sc = interaction.options.getInteger('score');
+        const freeScore = interaction.options.getInteger('score');
+        const presetScore = interaction.options.getInteger('rank')
         const gauge = interaction.options.getString('gauge');
+
+        // スコア決定
+        let sc = 0;
+        if (freeScore !== null) {
+            sc = freeScore;
+        } else if (presetScore !== null) {
+            sc = presetScore;
+        } else {
+            return await interaction.reply({ content: "[!] スコアまたはランクを入力してください", ephemeral: true})
+        }
 
         // --- VOLFORCE計算ロジック ---
         
@@ -121,14 +125,14 @@ client.on('interactionCreate', async interaction => {
 
         //*
         let embedColor = 0xa52a2a;
-        if (200 <= vf & vf < 240) embedColor = 0x000080;
-        else if (240 <= vf & vf < 280) embedColor = 0xfcc800;
-        else if (280 <= vf & vf < 300) embedColor = 0x25b7c0;
-        else if (300 <= vf & vf < 320) embedColor = 0xf73562;
-        else if (320 <= vf & vf < 340) embedColor = 0xff69b4;
-        else if (340 <= vf & vf < 360) embedColor = 0xd5ddef;
-        else if (360 <= vf & vf < 380) embedColor = 0xffd700;
-        else if (380 <= vf & vf < 400) embedColor = 0xff0000;
+        if (200 <= vf && vf < 240) embedColor = 0x000080;
+        else if (240 <= vf && vf < 280) embedColor = 0xfcc800;
+        else if (280 <= vf && vf < 300) embedColor = 0x25b7c0;
+        else if (300 <= vf && vf < 320) embedColor = 0xf73562;
+        else if (320 <= vf && vf < 340) embedColor = 0xff69b4;
+        else if (340 <= vf && vf < 360) embedColor = 0xd5ddef;
+        else if (360 <= vf && vf < 380) embedColor = 0xffd700;
+        else if (380 <= vf && vf < 400) embedColor = 0xff0000;
         else if (400 <= vf) embedColor = 0x800080;
         //*/
 
