@@ -23,13 +23,13 @@ const commands = [
         .addIntegerOption(opt => 
             opt.setName('score').setDescription('スコアを入力（0 ~ 10,000,000）').setRequired(true).setMinValue(0).setMaxValue(10000000))
         .addStringOption(opt => 
-            opt.setName('gauge').setDescription('ゲージや、UC/PUCのランプを入力')
+            opt.setName('gauge').setDescription('ゲージや、UC/PUCのランプを選択')
             .setRequired(true)
             .addChoices(
                 { name: 'PUC', value: 'puc' },
                 { name: 'UC', value: 'uc' },
-                { name: 'MAXXIVE COMP. (白)', value: 'max' },
-                { name: 'EXCESSIVE COMP. (ハード)', value: 'ex' },
+                { name: 'MAXXIVE COMP.  (白)', value: 'max' },
+                { name: 'EXCESSIVE COMP.  (ハード)', value: 'ex' },
                 { name: 'EFFECTIVE COMP.', value: 'c' },
                 { name: 'TRACK CRASH', value: 'f' }
             ))
@@ -125,8 +125,7 @@ client.on('interactionCreate', async interaction => {
                 { name: '譜面定数', value: `Lv ${lv.toFixed(1)}`},
                 { name: 'スコア', value: sc.toLocaleString()},
                 { name: 'ゲージ', value: gaugeName},
-                { name: '\u200b', value: '\u200b'},
-                { name: '= 単曲VF =', value: `**${vf.toFixed(0)}**` }
+                { name: '≪ 単曲VF ≫', value: `**${vf.toFixed(0)}**` }
             );
 
         await interaction.reply({ embeds: [embed] });
