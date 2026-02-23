@@ -132,7 +132,7 @@ client.on('interactionCreate', async interaction => {
             //*
             .addFields(
                 { name: '≪ 入力情報 ≫', value: "・譜面定数：" + lv.toFixed(1) + "\n・スコア　：" + sc.toLocaleString() + "\n・ゲージ　：" + gaugeName},
-                { name: '\n≪ 単曲VF ≫', value: `**${vf.toFixed(0)}**` }
+                { name: '≪ 単曲VF ≫', value: `**${vf.toFixed(0)}**` }
             );
             //*/
 
