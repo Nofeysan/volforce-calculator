@@ -19,19 +19,19 @@ const commands = [
         .setName('sdvx')
         .setDescription('VOLFORCEを計算します')
         .addNumberOption(opt => 
-            opt.setName('level').setDescription('譜面定数').setRequired(true).setMinValue(1.0).setMaxValue(20.9))
+            opt.setName('◆ Level ◆').setDescription('譜面定数を入力').setRequired(true).setMinValue(1.0).setMaxValue(20.9))
         .addIntegerOption(opt => 
-            opt.setName('score').setDescription('スコア').setRequired(true).setMinValue(0).setMaxValue(10000000))
+            opt.setName('◆ Score ◆').setDescription('スコアを入力（0 ~ 10,000,000）').setRequired(true).setMinValue(0).setMaxValue(10000000))
         .addStringOption(opt => 
-            opt.setName('gauge').setDescription('ゲージ')
+            opt.setName('◆ ゲージ・ランプ ◆').setDescription('ゲージや、UC/PUCのランプを入力')
             .setRequired(true)
             .addChoices(
                 { name: 'PUC', value: 'puc' },
                 { name: 'UC', value: 'uc' },
-                { name: 'MAXXIVE', value: 'max' },
-                { name: 'EXCESSIVE', value: 'ex' },
-                { name: 'EFFECTIVE', value: 'c' },
-                { name: 'FAILED', value: 'f' }
+                { name: 'MAXXIVE COMP. (白)', value: 'max' },
+                { name: 'EXCESSIVE COMP. (ハード)', value: 'ex' },
+                { name: 'EFFECTIVE COMP.', value: 'c' },
+                { name: 'TRACK CRASH', value: 'f' }
             ))
 ];
 
@@ -122,10 +122,10 @@ client.on('interactionCreate', async interaction => {
             .setTitle('SDVX VOLFORCE Calculator')
             .setColor(embedColor)
             .addFields(
-                { name: '譜面レベル', value: `Lv ${lv.toFixed(1)}`, inline: true },
+                { name: '譜面定数', value: `Lv ${lv.toFixed(1)}`, inline: true },
                 { name: 'スコア', value: sc.toLocaleString(), inline: true },
                 { name: 'ゲージ', value: gaugeName, inline: true },
-                { name: '単曲VF', value: `**${vf.toFixed(0)}**` }
+                { name: '= 単曲VF =', value: `**${vf.toFixed(0)}**` }
             );
 
         await interaction.reply({ embeds: [embed] });
