@@ -19,11 +19,11 @@ const commands = [
         .setName('sdvx')
         .setDescription('単曲VOLFORCEを計算します')
         .addNumberOption(opt => 
-            opt.setName('* レベル').setDescription('譜面定数を入力').setRequired(true).setMinValue(1.0).setMaxValue(20.9))
+            opt.setName('level').setDescription('譜面定数を入力').setRequired(true).setMinValue(1.0).setMaxValue(20.9))
         .addIntegerOption(opt => 
-            opt.setName('* スコア').setDescription('スコアを入力（0 ~ 10,000,000）').setRequired(true).setMinValue(0).setMaxValue(10000000))
+            opt.setName('score').setDescription('スコアを入力（0 ~ 10,000,000）').setRequired(true).setMinValue(0).setMaxValue(10000000))
         .addStringOption(opt => 
-            opt.setName('* ゲージ・ランプ').setDescription('ゲージや、UC/PUCのランプを入力')
+            opt.setName('gauge').setDescription('ゲージや、UC/PUCのランプを入力')
             .setRequired(true)
             .addChoices(
                 { name: 'PUC', value: 'puc' },
