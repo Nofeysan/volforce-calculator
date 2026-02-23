@@ -90,13 +90,13 @@ client.on('interactionCreate', async interaction => {
 
         // ゲージ（メダル）
         let medalFactor = 0.5;// FAILED
-        let gaugeName = "Failed"; 
+        let gaugeName = "TRACK CRASH"; 
 
         if (gauge === 'puc') {medalFactor = 1.10; gaugeName = "PUC";}
         else if (gauge === 'uc') {medalFactor = 1.06; gaugeName = "UC";}
-        else if (gauge === 'max') {medalFactor = 1.04; gaugeName = "MAXXIVE";}
-        else if (gauge === 'ex') {medalFactor = 1.02; gaugeName = "EXCESSIVE";}
-        else if (gauge === 'c') {medalFactor = 1.00; gaugeName = "EFFECTIVE";}
+        else if (gauge === 'max') {medalFactor = 1.04; gaugeName = "MAXXIVE COMP.";}
+        else if (gauge === 'ex') {medalFactor = 1.02; gaugeName = "EXCESSIVE COMP.";}
+        else if (gauge === 'c') {medalFactor = 1.00; gaugeName = "EFFECTIVE COMP.";}
 
         // ③ 計算式: Level * (Score/10,000,000) * GradeFactor * MedalFactor * 2 (単曲VF)
         const vf = Math.floor( lv * (sc / 10000000) * gradeFactor * medalFactor * 20 ); 
@@ -122,7 +122,7 @@ client.on('interactionCreate', async interaction => {
             // .setTitle('SDVX 単曲VOLFORCE')
             .setColor(embedColor)
             .addFields(
-                { name: '譜面定数', value: `Lv ${lv.toFixed(1)}`},
+                { name: '譜面定数', value: `${lv.toFixed(1)}`},
                 { name: 'スコア', value: sc.toLocaleString()},
                 { name: 'ゲージ', value: gaugeName},
                 { name: '≪ 単曲VF ≫', value: `**${vf.toFixed(0)}**` }
