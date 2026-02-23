@@ -106,10 +106,10 @@ client.on('interactionCreate', async interaction => {
             .setTitle('SDVX VOLFORCE Calculator')
             .setColor(0xff00ff)
             .addFields(
-                { name: '譜面レベル', value: `Lv ${lv}`, inline: true },
+                { name: '譜面レベル', value: `Lv ${lv.toFixed(1)}`, inline: true },
                 { name: 'スコア', value: sc.toLocaleString(), inline: true },
                 { name: 'ゲージ', value: gaugeName, inline: true },
-                { name: '単曲VF', value: `## ${vf}` }
+                { name: '単曲VF', value: `### **${vf.toFixed(0)}**` }
             );
 
         await interaction.reply({ embeds: [embed] });
