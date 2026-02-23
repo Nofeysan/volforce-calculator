@@ -21,7 +21,7 @@ const commands = [
         .addNumberOption(opt => 
             opt.setName('level').setDescription('譜面定数を入力').setRequired(true).setMinValue(1.0).setMaxValue(20.9))
         .addIntegerOption(opt => 
-            opt.setName('score').setDescription('スコアを入力（0 ~ 10,000,000）').setRequired(true).setMinValue(0).setMaxValue(10000000))
+            opt.setName('score').setDescription('スコアを入力（0 ~ 10,000,000）').setRequired(true).setMinValue(0).setMaxValue(10000000).setAutocomplete(true))
         .addStringOption(opt => 
             opt.setName('gauge').setDescription('ゲージや、UC/PUCのランプを選択')
             .setRequired(true)
@@ -68,6 +68,20 @@ client.once('ready', async (c) => {
 // 4. インタラクション受信時の処理
 client.on('interactionCreate', async interaction => {
     if (!interaction.isChatInputCommand()) return;
+
+    if (interaction.isAutocomplete()) {
+        const focusedValue = interaction.getForcused();
+
+        const choices = [
+            { name: "PUC (10,000,000)",  value: 10000000},
+            { name: "S (10,000,000)",    value:  9900000},
+            { name: "AAA+ (10,000,000)", value:  9800000},
+            { name: "AAA (10,000,000)",  value:  9700000},
+        ]
+
+        const filtered = choices.filter(choise => choise.name.includes(focusedValue))
+        await interaction.respond(filtered)
+    }
 
     if (interaction.commandName === 'sdvx') {
         const lv = interaction.options.getNumber('level');
