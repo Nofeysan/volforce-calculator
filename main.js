@@ -17,7 +17,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 const commands = [
     new SlashCommandBuilder()
         .setName('sdvx')
-        .setDescription('VOLFORCEを計算します')
+        .setDescription('単曲VOLFORCEを計算します')
         .addNumberOption(opt => 
             opt.setName('◆ Level ◆').setDescription('譜面定数を入力').setRequired(true).setMinValue(1.0).setMaxValue(20.9))
         .addIntegerOption(opt => 
