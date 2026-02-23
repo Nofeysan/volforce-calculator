@@ -89,12 +89,14 @@ client.on('interactionCreate', async interaction => {
         else if (sc >= 6500000) gradeFactor = 0.82; // C
 
         // ゲージ（メダル）
-        let medalFactor = 0.5; // FAILED
-        if (gauge === 'puc') medalFactor = 1.10;
-        else if (gauge === 'uc') medalFactor = 1.06;
-        else if (gauge === 'max') medalFactor = 1.04;
-        else if (gauge === 'ex') medalFactor = 1.02;
-        else if (gauge === 'c') medalFactor = 1.00;
+        let medalFactor = 0.5;// FAILED
+            gaugeName = "Failed"; 
+
+        if (gauge === 'puc') {medalFactor = 1.10; gaugeName = "PUC";}
+        else if (gauge === 'uc') {medalFactor = 1.06; gaugeName = "UC";}
+        else if (gauge === 'max') {medalFactor = 1.04; gaugeName = "MAXXIVE";}
+        else if (gauge === 'ex') {medalFactor = 1.02; gaugeName = "EXCESSIVE";}
+        else if (gauge === 'c') {medalFactor = 1.00; gaugeName = "EFFECTIVE";}
 
         // ③ 計算式: Level * (Score/10,000,000) * GradeFactor * MedalFactor * 2 (単曲VF)
         const vf = Math.floor( lv * (sc / 10000000) * gradeFactor * medalFactor * 20 ); 
@@ -107,7 +109,7 @@ client.on('interactionCreate', async interaction => {
                 { name: '譜面レベル', value: `Lv ${lv}`, inline: true },
                 { name: 'スコア', value: sc.toLocaleString(), inline: true },
                 { name: 'ゲージ', value: gauge.toUpperCase(), inline: true },
-                { name: '計算結果 (単曲VF)', value: `**${vf.toFixed(3)}**` }
+                { name: '単曲VF', value: `### ${vf}**` }
             );
 
         await interaction.reply({ embeds: [embed] });
