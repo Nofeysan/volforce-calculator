@@ -70,17 +70,18 @@ client.on('interactionCreate', async interaction => {
     if (!interaction.isChatInputCommand()) return;
 
     if (interaction.isAutocomplete()) {
-        const focusedValue = interaction.getForcused();
+        const focusedValue = interaction.getFocused();
 
         const choices = [
             { name: "PUC (10,000,000)",  value: 10000000},
-            { name: "S (10,000,000)",    value:  9900000},
-            { name: "AAA+ (10,000,000)", value:  9800000},
-            { name: "AAA (10,000,000)",  value:  9700000},
+            { name: "S (9,900,000)",    value:  9900000},
+            { name: "AAA+ (9,800,000)", value:  9800000},
+            { name: "AAA (9,700,000)",  value:  9700000},
         ]
 
-        const filtered = choices.filter(choise => choise.name.includes(focusedValue))
+        const filtered = choices.filter(choice => choice.name.includes(focusedValue))
         await interaction.respond(filtered)
+        return;
     }
 
     if (interaction.commandName === 'sdvx') {
