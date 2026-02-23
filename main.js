@@ -36,7 +36,7 @@ const commands = [
 ];
 
 // 3. 起動時処理（コマンド登録）
-client.once('ready', async () => {
+client.once('clientReady', async () => {
     console.log(`Logged in as ${client.user.tag}`);
     
     const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
@@ -54,7 +54,7 @@ client.on('interactionCreate', async interaction => {
     if (!interaction.isChatInputCommand()) return;
 
     if (interaction.commandName === 'sdvx') {
-        const lv = interaction.options.getInteger('level');
+        const lv = interaction.options.getNumber('level');
         const sc = interaction.options.getInteger('score');
         const gauge = interaction.options.getString('gauge');
 
