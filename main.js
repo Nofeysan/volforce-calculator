@@ -90,7 +90,7 @@ client.on('interactionCreate', async interaction => {
 
         // ゲージ（メダル）
         let medalFactor = 0.5;// FAILED
-            gaugeName = "Failed"; 
+        let gaugeName = "Failed"; 
 
         if (gauge === 'puc') {medalFactor = 1.10; gaugeName = "PUC";}
         else if (gauge === 'uc') {medalFactor = 1.06; gaugeName = "UC";}
