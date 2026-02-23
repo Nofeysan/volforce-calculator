@@ -1,6 +1,15 @@
 const { Client, GatewayIntentBits, SlashCommandBuilder, Routes, EmbedBuilder } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 
+// Health Check用
+const http = require('http');
+
+// KoyebのHealth CheckとUptimeRobot用の簡易サーバー
+http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Bot is alive!');
+}).listen(8000);
+
 // 1. Botのクライアント作成（Slash CommandのみなのでGuildsインテントのみでOK）
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
