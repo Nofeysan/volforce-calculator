@@ -18,18 +18,22 @@ const commands = [
     new SlashCommandBuilder()
         .setName('sdvx')
         .setDescription('単曲VOLFORCEを計算します')
+
         .addNumberOption(opt => 
             opt.setName('level').setDescription('譜面定数を入力').setRequired(true).setMinValue(1.0).setMaxValue(20.9))
+        
         .addIntegerOption(opt => 
             opt.setName('score').setDescription('スコアを入力（0 ~ 10,000,000）').setRequired(false).setMinValue(0).setMaxValue(10000000))
+        
         .addIntegerOption(opt => 
             opt.setName('rank').setDescription('もしくはランクを入力（どちらか一方のみ必須）').setRequired(false)
-        .addChoices(
-            { name: 'PUC (10,000,000)', value: 10000000 },
-            { name: 'S (9,900,000)',    value:  9900000 },
-            { name: 'AAA+ (9,800,000)', value:  9800000 },
-            { name: 'AAA (9,700,000)',  value:  9700000 }
-        ))
+            .addChoices(
+                { name: 'PUC (10,000,000)', value: 10000000 },
+                { name: 'S (9,900,000)',    value:  9900000 },
+                { name: 'AAA+ (9,800,000)', value:  9800000 },
+                { name: 'AAA (9,700,000)',  value:  9700000 }
+            ))
+        
         .addStringOption(opt => 
             opt.setName('gauge').setDescription('ゲージや、UC/PUCのランプを選択')
             .setRequired(true)
@@ -80,7 +84,7 @@ client.on('interactionCreate', async interaction => {
     if (interaction.commandName === 'sdvx') {
         const lv = interaction.options.getNumber('level');
         const freeScore = interaction.options.getInteger('score');
-        const presetScore = interaction.options.getInteger('rank')
+        const presetScore = interaction.options.getInteger('rank');
         const gauge = interaction.options.getString('gauge');
 
         // スコア決定
