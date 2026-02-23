@@ -9,7 +9,7 @@ const commands = [
     new SlashCommandBuilder()
         .setName('sdvx')
         .setDescription('VOLFORCEを計算します')
-        .addIntegerOption(opt => 
+        .addNumberOption(opt => 
             opt.setName('level').setDescription('譜面定数').setRequired(true).setMinValue(1.0).setMaxValue(20.9))
         .addIntegerOption(opt => 
             opt.setName('score').setDescription('スコア').setRequired(true).setMinValue(0).setMaxValue(10000000))
