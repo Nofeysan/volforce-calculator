@@ -119,14 +119,22 @@ client.on('interactionCreate', async interaction => {
 
         // 結果の返信
         const embed = new EmbedBuilder()
-            // .setTitle('SDVX 単曲VOLFORCE')
             .setColor(embedColor)
+            /*
             .addFields(
-                { name: '譜面定数', value: `${lv.toFixed(1)}` + "　"},
-                { name: 'スコア', value: sc.toLocaleString() + "　"},
-                { name: 'ゲージ', value: gaugeName + "　"},
+                { name: '譜面定数', value: `${lv.toFixed(1)}`},
+                { name: 'スコア', value: sc.toLocaleString()},
+                { name: 'ゲージ', value: gaugeName},
                 { name: '≪ 単曲VF ≫', value: `**${vf.toFixed(0)}**` }
             );
+            //*/
+
+            //*
+            .addFields(
+                { name: '入力情報', value: "・譜面定数：" + lv.toFixed(1) + "\n・スコア：" + sc.toLocaleString() + "\n・ゲージ：" + gaugeName},
+                { name: '≪ 単曲VF ≫', value: `**${vf.toFixed(0)}**` }
+            );
+            //*/
 
         await interaction.reply({ embeds: [embed] });
     }
