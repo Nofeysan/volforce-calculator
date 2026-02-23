@@ -136,7 +136,11 @@ client.on('interactionCreate', async interaction => {
             );
             //*/
 
-        await interaction.reply({ embeds: [embed] });
+        // ログを流す
+        const logTime = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
+        console.log(`[${logTime}] input: ${lv} / ${sc.toLocaleString()} / ${gaugeName} => VF ${vf}`);
+
+                await interaction.reply({ embeds: [embed] });
     }
 });
 
