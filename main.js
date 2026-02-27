@@ -1,19 +1,18 @@
 const { Client, GatewayIntentBits, SlashCommandBuilder, Routes, EmbedBuilder } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 
-// Health Check用
+// Health Check
 const http = require('http');
 
-// KoyebのHealth CheckとUptimeRobot用の簡易サーバー
 http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.end('Bot is alive!');
 }).listen(8000);
 
-// 1. Botのクライアント作成（Slash CommandのみなのでGuildsインテントのみでOK）
+// Botのクライアント作成
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-// 2. コマンドの定義
+// コマンド作成
 const commands = [
     new SlashCommandBuilder()
         .setName('sdvx')
@@ -32,25 +31,11 @@ const commands = [
                 { name: 'EXCESSIVE COMP.  (ハード)', value: 'ex' },
                 { name: 'EFFECTIVE COMP.', value: 'c' },
                 { name: 'TRACK CRASH', value: 'f' }
-            ))
+            )
+        )
 ];
 
-// 3. 起動時処理（コマンド登録）
-/*/
-client.once('clientReady', async () => {
-    console.log(`Logged in as ${client.user.tag}`);
-    
-    const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
-    try {
-        // 全サーバー共通のグローバルコマンドとして登録
-        await rest.put(Routes.applicationCommands(client.user.id), { body: commands });
-        console.log('Slash Commands registered successfully.');
-    } catch (error) {
-        console.error('Error registering commands:', error);
-    }
-});
-/*/
-
+// 起動時処理（コマンド登録）
 client.once('ready', async (c) => {
     console.log(`> ログイン成功: ${c.user.tag}`);
     
@@ -65,7 +50,7 @@ client.once('ready', async (c) => {
     }
 });
 
-// 4. インタラクション受信時の処理
+// インタラクション受信時の処理
 client.on('interactionCreate', async interaction => {
     if (!interaction.isChatInputCommand()) return;
 
@@ -74,9 +59,7 @@ client.on('interactionCreate', async interaction => {
         const sc = interaction.options.getInteger('score');
         const gauge = interaction.options.getString('gauge');
 
-        // --- VOLFORCE計算ロジック ---
-        
-        // グレード係数
+        // スコア
         let gradeFactor = 0.80; // Default (D)
         if (sc >= 9900000) gradeFactor = 1.05;      // S
         else if (sc >= 9800000) gradeFactor = 1.02; // AAA+
@@ -88,7 +71,7 @@ client.on('interactionCreate', async interaction => {
         else if (sc >= 7500000) gradeFactor = 0.85; // B
         else if (sc >= 6500000) gradeFactor = 0.82; // C
 
-        // ゲージ（メダル）
+        // ゲージ
         let medalFactor = 0.5;// FAILED
         let gaugeName = "TRACK CRASH"; 
 
@@ -98,51 +81,36 @@ client.on('interactionCreate', async interaction => {
         else if (gauge === 'ex') {medalFactor = 1.02; gaugeName = "EXCESSIVE COMP.";}
         else if (gauge === 'c') {medalFactor = 1.00; gaugeName = "EFFECTIVE COMP.";}
 
-        // ③ 計算式: Level * (Score/10,000,000) * GradeFactor * MedalFactor * 2 (単曲VF)
+        // 計算
         const vf = Math.floor( lv * (sc / 10000000) * gradeFactor * medalFactor * 20 ); 
 
-        // 色設定
-        //let embedColor = 0xa52a2a
-
-        //*
+        // バナー色をランク帯に合わせる
         let embedColor = 0xa52a2a;
-        if (200 <= vf && vf < 240) embedColor = 0x000080;
-        else if (240 <= vf && vf < 280) embedColor = 0xfcc800;
-        else if (280 <= vf && vf < 300) embedColor = 0x25b7c0;
-        else if (300 <= vf && vf < 320) embedColor = 0xf73562;
-        else if (320 <= vf && vf < 340) embedColor = 0xff69b4;
-        else if (340 <= vf && vf < 360) embedColor = 0xd5ddef;
-        else if (360 <= vf && vf < 380) embedColor = 0xffd700;
-        else if (380 <= vf && vf < 400) embedColor = 0xff0000;
-        else if (400 <= vf) embedColor = 0x800080;
-        //*/
+        if (400 <= vf) embedColor = 0x800080;
+        else if (380 <= vf) embedColor = 0xff0000;
+        else if (360 <= vf) embedColor = 0xffd700;
+        else if (340 <= vf) embedColor = 0xd5ddef;
+        else if (320 <= vf) embedColor = 0xff69b4;
+        else if (300 <= vf) embedColor = 0xf73562;
+        else if (280 <= vf) embedColor = 0x25b7c0;
+        else if (240 <= vf) embedColor = 0xfcc800;
+        else if (200 <= vf) embedColor = 0x000080
 
         // 結果の返信
         const embed = new EmbedBuilder()
             .setColor(embedColor)
-            /*
-            .addFields(
-                { name: '譜面定数', value: `${lv.toFixed(1)}`},
-                { name: 'スコア', value: sc.toLocaleString()},
-                { name: 'ゲージ', value: gaugeName},
-                { name: '≪ 単曲VF ≫', value: `**${vf.toFixed(0)}**` }
-            );
-            //*/
-
-            //*
             .addFields(
                 { name: '≪ 入力情報 ≫', value: "・譜面定数：" + lv.toFixed(1) + "\n・スコア　：" + sc.toLocaleString() + "\n・ゲージ　：" + gaugeName},
                 { name: '≪ 単曲VF ≫', value: `**${vf.toFixed(0)}**` }
             );
-            //*/
 
         // ログを流す
         const logTime = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
-        console.log(`[${logTime}] input: ${lv.toFixed(1)} / ${sc.toLocaleString()} / ${gaugeName} => VF ${vf}`);
+        console.log(`[${logTime}] ${lv.toFixed(1)} / ${sc.toLocaleString()} / ${gaugeName} => VF ${vf}`);
 
-                await interaction.reply({ embeds: [embed] });
+        await interaction.reply({ embeds: [embed] });
     }
 });
 
-// 5. ログイン（環境変数を使用）
+// ログイン
 client.login(process.env.DISCORD_TOKEN);
