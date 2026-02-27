@@ -86,15 +86,15 @@ client.on('interactionCreate', async interaction => {
 
         // バナー色をランク帯に合わせる
         let embedColor = 0xa52a2a;
-        if (200 <= vf && vf < 240) embedColor = 0x000080;
-        else if (240 <= vf && vf < 280) embedColor = 0xfcc800;
-        else if (280 <= vf && vf < 300) embedColor = 0x25b7c0;
-        else if (300 <= vf && vf < 320) embedColor = 0xf73562;
-        else if (320 <= vf && vf < 340) embedColor = 0xff69b4;
-        else if (340 <= vf && vf < 360) embedColor = 0xd5ddef;
-        else if (360 <= vf && vf < 380) embedColor = 0xffd700;
-        else if (380 <= vf && vf < 400) embedColor = 0xff0000;
-        else if (400 <= vf) embedColor = 0x800080;
+        if (400 <= vf) embedColor = 0x800080;
+        else if (380 <= vf) embedColor = 0xff0000;
+        else if (360 <= vf) embedColor = 0xffd700;
+        else if (340 <= vf) embedColor = 0xd5ddef;
+        else if (320 <= vf) embedColor = 0xff69b4;
+        else if (300 <= vf) embedColor = 0xf73562;
+        else if (280 <= vf) embedColor = 0x25b7c0;
+        else if (240 <= vf) embedColor = 0xfcc800;
+        else if (200 <= vf) embedColor = 0x000080
 
         // 結果の返信
         const embed = new EmbedBuilder()
